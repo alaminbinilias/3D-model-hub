@@ -1,0 +1,13 @@
+.active {
+  background-color: #FFCCB8;
+  border-radius: 10px;
+  color: black;
+  font-weight: bold;
+}
+
+li:hover {
+  background-color: rgb(131, 77, 86);
+  border-radius: 10px;
+  color: pink;
+}
+
