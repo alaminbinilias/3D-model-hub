@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -12,72 +12,44 @@ const videos = [
 
 const BannerSection = () => {
   const [CurrentAdd, setCurrentAdd] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentAdd((prev) => prev + 1 + videos.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, []);
-
+  const swiperRef = useRef(null);
   const PrevBtn = () => {
-    console.log("PreviousBtn");
-    setCurrentAdd((CurrentAdd - 1 + videos.length) % videos.length);
+    swiperRef.current.slidePrev();
   };
   const NextBtn = () => {
-    console.log("NextBtn");
+    swiperRef.current.slideNext();
   };
 
   return (
-    // <div className='border object-cover flex items-center justify-center mt-2'>
-    //     <div className='flex overflow-hidden w-full brightness-90 transition-transform duration-700 ease-in-out' style={{
-    //         transform:`translateX(-${current * 100}%)`
-    //     }}>
-    //         {
-    //             videos.map((src,i)=>(
-    //                 <div key={i} className='w-full relative shrink-0'>
-    //                 <video
-    //                 src={src}
-    //                 autoPlay
-    //                 loop
-    //                 muted
-    //                 playsInline
-    //                 className='w-full h-[80vh] object-center object-cover'
-    //                 ></video>
-    //                 </div>
-    //             ))
-    //         }
-    //     </div>
-    // </div>
-    <div className=" relative z-0 h-full mt-1">
-      <div className="w-full max-h-full flex justify-center items-center">
+    <div className="min-w-0 mt-3">
+      <div className="relative z-10 w-full flex justify-center items-center">
         <Swiper
-          spaceBetween={30}
-          centeredSlides={true}
-          autoplay={{
-            delay: 6800,
-            disableOnInteraction: false,
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
           }}
-          navigation={true}
-          modules={[Autoplay, navigation]}
-          className="mySwiper"
+          onSlideChange={(swiper) => {
+            setCurrentAdd(swiper.realIndex);
+          }}
+          autoplay={{
+            delay: 7000,
+          }}
+          modules={[Autoplay]}
         >
-          {videos.map((src, i) => (
-            <div>
-              <SwiperSlide
-                className=" absolute z-10 transition-transform ease-in-out"
-                style={{ transform: `translateX(-${CurrentAdd - 1 * 100}%)` }}
-              >
-                <video
-                  src={src}
-                  autoPlay
-                  loop
-                  muted
-                  className=" w-full mt-3 lg:mt-2 max-h-[42vh] lg:max-h-[70vh] object-fill rounded-2xl"
-                ></video>
-              </SwiperSlide>
-            </div>
-          ))}
+          <div>
+            {videos.map((src, i) => (
+              <div>
+                <SwiperSlide key={i}>
+                  <video
+                    src={src}
+                    autoPlay
+                    loop
+                    muted
+                    className="w-full px-1 lg:px-0 object-fill h-80 md:h-100 lg:h-130 rounded-xl"
+                  ></video>
+                </SwiperSlide>
+              </div>
+            ))}
+          </div>
         </Swiper>
         <div className="absolute z-30 w-full flex justify-between px-2">
           <button onClick={PrevBtn}>
@@ -94,8 +66,8 @@ const BannerSection = () => {
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-end gap-2 z-40">
           {videos.map((_, i) => (
             <button
-              key={i-1}
-              onClick={() => setCurrentAdd(i-1)}
+              key={i - 1}
+              onClick={() => setCurrentAdd(i)}
               className={`h-2 w-2 rounded-full transition-all ${
                 CurrentAdd === i ? "bg-white w-4" : "bg-white/50"
               }`}
