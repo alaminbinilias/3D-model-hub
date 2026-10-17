@@ -1,12 +1,18 @@
-import React from "react";
+import React, { use } from "react";
 import { TbBrandGoogleHome } from "react-icons/tb";
 import { Link, NavLink } from "react-router";
 import "./navsection.css";
 import { MdOutlineHomeMini } from "react-icons/md";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { LuRotate3D } from "react-icons/lu";
+import AuthContext from "../Context/Context/Context";
 
 const NavSection = () => {
+
+  const {HandleName}=use(AuthContext);
+
+  console.log(HandleName);
+
   const links = (
     <>
       <li>
@@ -18,7 +24,7 @@ const NavSection = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/allmodels">
+        <NavLink to="/all/models">
           <span className="hidden lg:flex ">
             <MdOutlineHomeMini className="-mr-1" size={18} />
           </span>
@@ -26,7 +32,7 @@ const NavSection = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/addmoels">
+        <NavLink to="/model/add">
           <span className="hidden lg:flex">
             <IoAddCircleSharp className="-mr-1" size={18} />
           </span>
@@ -38,7 +44,7 @@ const NavSection = () => {
 
   return (
     <div>
-      <div className="navbar bg-base-100 shadow-sm rounded-xl">
+      <div className="navbar bg-base-100 shadow-sm rounded-xl relative">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -61,12 +67,12 @@ const NavSection = () => {
             </div>
             <ul
               tabIndex={-1}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 px-1 space-y-1 shadow"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box absolute z-50 mt-3 w-52 px-1 space-y-1 shadow"
             >
               {links}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl"><span><LuRotate3D /></span>3D Model Hub</a>
+          <Link to='/' className="btn btn-ghost text-[15px] md:text-[26px]lg:text-xl font-bold"><span><LuRotate3D /></span>3D Model Hub</Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-2 font-semibold">
@@ -74,7 +80,7 @@ const NavSection = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <div className="flex gap-2">
+          {/* <div className="flex gap-2">
             <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}
@@ -90,7 +96,7 @@ const NavSection = () => {
               </div>
               <ul
                 tabIndex={-1}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow absolute z-50"
               >
                 <li>
                   <a className="justify-between">
@@ -106,7 +112,8 @@ const NavSection = () => {
                 </li>
               </ul>
             </div>
-          </div>
+          </div> */}
+          <Link to='/login'><button className="btn btn-primary px-7 font-bold">Login</button></Link>
         </div>
       </div>
     </div>

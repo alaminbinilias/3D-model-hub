@@ -1,5 +1,6 @@
 import React from "react";
 import { LuRotate3D } from "react-icons/lu";
+import { Link } from "react-router";
 
 const FooterSection = () => {
   return (
@@ -7,8 +8,8 @@ const FooterSection = () => {
       <footer className="bg-linear-to-r from-[#FFCCB8] to-[#FFDBB0] footer sm:footer-horizontal bg-base-200 text-base-content p-10 rounded-xl">
         <nav>
           <h6 className="footer-title flex gap-0.5"><span><LuRotate3D></LuRotate3D></span> 3D Model Hub</h6>
-          <a className="link link-hover">All Models</a>
-          <a className="link link-hover">Add Models</a>
+          <Link to="all/models" className="link link-hover">All Models</Link>
+          <Link to="model/add" className="link link-hover">Add Models</Link>
           <a className="link link-hover">Profile</a>
           <a className="link link-hover">Login</a>
         </nav>
